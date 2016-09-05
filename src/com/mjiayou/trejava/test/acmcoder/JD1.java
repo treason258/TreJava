@@ -1,4 +1,4 @@
-package com.mjiayou.trejava;
+package com.mjiayou.trejava.test.acmcoder;
 
 import java.util.Scanner;
 

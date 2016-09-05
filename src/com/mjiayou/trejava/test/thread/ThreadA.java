@@ -1,4 +1,4 @@
-package com.mjiayou.trejava;
+package com.mjiayou.trejava.test.thread;
 
 class ThreadA {
 	public static void main(String[] args) {
