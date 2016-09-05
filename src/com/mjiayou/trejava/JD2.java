@@ -5,20 +5,13 @@ import java.util.Scanner;
 public class JD2 {
 
 	public static void main(String[] args) {
-		final int COUNT = 4;
-
-		int[] num = new int[COUNT];
-		Scanner scanner = new Scanner(System.in);
-		for (int i = 0; i < COUNT; i++) {
-			num[i] = scanner.nextInt();
+		Scanner cin = new Scanner(System.in);
+		int num;
+		while (cin.hasNextInt()) {
+			num = cin.nextInt();
+			System.out.println(getLuckyNum(num));
 		}
-		scanner.close();
-
-		for (int i = 0; i < COUNT; i++) {
-			System.out.println(getLuckyNum(num[i]));
-		}
-
-		// System.out.println(getLuckyNum(21));
+		cin.close();
 	}
 
 	/**
