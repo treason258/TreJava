@@ -1,22 +1,21 @@
-package com.mjiayou.trejava.code;
+package com.mjiayou.trejava.algorithm;
 
 import java.util.Scanner;
 
-public class PrintDiamond {
+public class Print {
 
 	public static void main(String[] args) {
 
-		print1();
-		print2();
-		print3();
-		
-		
+		printDiamond1();
+		printDiamond2();
+		printDiamond3();
+
 	}
 
 	/**
 	 * 打印实心菱形
 	 */
-	private static void print1() {
+	private static void printDiamond1() {
 		System.out.println("打印实心菱形：");
 
 		int line = 9;
@@ -45,7 +44,7 @@ public class PrintDiamond {
 	/**
 	 * 打印空心菱形
 	 */
-	private static void print2() {
+	private static void printDiamond2() {
 		System.out.println("打印空心菱形：");
 
 		int line = 11;
@@ -84,7 +83,7 @@ public class PrintDiamond {
 	/**
 	 * 打印指定行数的菱形
 	 */
-	private static void print3() {
+	private static void printDiamond3() {
 		System.out.println("打印指定行数的菱形：");
 		System.out.print("请输入对应三角形的行数：");
 
