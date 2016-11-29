@@ -1,5 +1,6 @@
 package com.mjiayou.trejava;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,13 +10,30 @@ public class BabyFinder {
 
 	public static void main(String[] args) {
 		System.out.println("**************** BEGIN ****************");
-
+		System.out.println();
 		System.out.println("getAddressByNumber(940022110dfc83b7d6d1) -> " + getAddressByNumber("940022110dfc83b7d6d1"));
 		System.out.println("getNumberByAddress(0D:FC:83:B7:D6:D1) -> " + getNumberByAddress("0D:FC:83:B7:D6:D1"));
-
+		System.out.println();
 		System.out.println("getDisconnectDateTime(1479560999) -> " + getDisconnectDateTime("1479560999"));
 		System.out.println("getDisconnectDateTime(1479560999) -> " + getDisconnectDateTime("1479561204.18805"));
-
+		System.out.println();
+		String fileNameOrigin = "/Users/treason/Pictures/com.tencent.ScreenCapture/QQ20160927-9@2x.ssss";
+		File file = new File(fileNameOrigin);
+		String mimeType;
+		mimeType = "image/" + file.getName().split("\\.")[1]; // image/jpg
+		mimeType = "image/" + file.getName().substring(file.getName().lastIndexOf(".") + 1);
+		System.out.println("mimeType -> " + mimeType);
+		System.out.println();
+		System.out.println("getProtectTime(1479560999) -> " + getProtectTime("12000"));
+		System.out.println();
+		String tempName = "尚未设置";
+		try {
+			tempName = "18600574121";
+			tempName = tempName.substring(0, 3) + "****" + tempName.substring(tempName.length() - 4, tempName.length());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("tempName -> " + tempName);
 		System.out.println("**************** END ****************");
 	}
 
@@ -27,12 +45,6 @@ public class BabyFinder {
 		Long timestampL = Math.round(timestampD);
 		dateTime = DateUtil.parseString(timestampL, DateUtil.FormatType.FORMAT_DEFAULT);
 		return dateTime;
-	}
-
-	public static String getProtectTime(String protection) {
-		String protectTime = protection;
-		// TODO 需要转换处理
-		return protectTime;
 	}
 
 	public static String getAddressByNumber(String number) {
@@ -58,5 +70,22 @@ public class BabyFinder {
 		}
 		number = "94002211" + builder.toString().toLowerCase();
 		return number;
+	}
+
+	public static String getProtectTime(String protection) {
+		return getProtectTime(Long.valueOf(protection));
+	}
+
+	public static String getProtectTime(long protection) {
+		if (protection < 60) {
+			return "小于一分钟";
+		} else if (protection >= 60 && protection < 60 * 60) {
+			long minute = protection / 60;
+			return minute + "分钟";
+		} else {
+			long hour = protection / (60 * 60);
+			long minute = protection % (60 * 60) / 60;
+			return hour + "小时" + (minute == 0 ? "" : minute + "分钟");
+		}
 	}
 }
