@@ -7,7 +7,7 @@ public class RateCalculator {
     public static void main(String[] args) {
         System.out.println("**************** BEGIN ****************");
 
-        double moneyCount = 5000; // 元
+        double moneyCount = 1000; // 元
         int monthCount = 12; // 月
         double dayRate = 0.035 / 100; // Alipay=0.035%; JD=0.04%; WX=0.05%;
         System.out.println(getInterestInfo(moneyCount, monthCount, dayRate));
