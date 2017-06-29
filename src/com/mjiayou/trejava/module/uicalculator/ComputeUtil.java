@@ -1,11 +1,11 @@
-package com.mjiayou.trejava.temp.ui;
+package com.mjiayou.trejava.module.uicalculator;
 
 import java.util.regex.Pattern;
 
 /**
  * Created by treason on 2017/6/20.
  */
-public class Compute {
+public class ComputeUtil {
 
     // calculate sqrt for number
     static public String Sqr(String[] X) {
@@ -65,7 +65,6 @@ public class Compute {
         for (int ii = 0; ii < newstring.length; ii++) {
             if (newstring[ii] != null)
                 pop += newstring[ii];
-
         }
 
         return pop;
@@ -310,7 +309,7 @@ public class Compute {
                     for (int i = I; i >= 0; i--) {
                         if (X.charAt(i) == '(') {                          //search for a opening bracket
                             String newexp = X.substring(i + 1, I);
-                            newexp = Compute.Dooperation(newexp);
+                            newexp = ComputeUtil.Dooperation(newexp);
                             X = X.substring(0, i) + newexp + X.substring(I + 1);
                             i = I = 0;
                         }
@@ -324,7 +323,7 @@ public class Compute {
         }
 
         try {
-            X = Compute.Dooperation(X);
+            X = ComputeUtil.Dooperation(X);
             result2 = Double.parseDouble(X);
             result = (int) result2;
             if (result == result2) {
@@ -339,7 +338,7 @@ public class Compute {
             ex.printStackTrace();
         }
 
-        // X=Compute.Dooperation(X);
+        // X=ComputeUtil.Dooperation(X);
         return X;
     }
 }

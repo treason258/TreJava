@@ -1,4 +1,4 @@
-package com.mjiayou.trejava.temp.ui;
+package com.mjiayou.trejava.module.uicalculator;
 
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
@@ -527,7 +527,7 @@ public class Calculator extends Application {
 
         equal.setOnMouseClicked(e -> {
             try {
-                exp = Compute.solve(exp);
+                exp = ComputeUtil.solve(exp);
                 textField.setText(exp);
                 res = true;
                 x2 = false;
