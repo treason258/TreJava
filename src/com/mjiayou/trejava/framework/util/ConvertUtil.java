@@ -1,4 +1,4 @@
-package com.mjiayou.trejava.temp.util;
+package com.mjiayou.trejava.framework.util;
 
 import java.lang.reflect.Field;
 import java.util.Map;

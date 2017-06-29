@@ -1,29 +1,29 @@
-package com.mjiayou.trejava.temp.system;
+package com.mjiayou.trejava.module.system;
 
-import com.mjiayou.trejava.temp.util.ConvertUtil;
+import com.mjiayou.trejava.framework.util.ConvertUtil;
 
 import java.util.Properties;
 
 /**
- * Created by treason on 2017/6/29.
+ * 系统信息
  */
 public class SystemInfo {
 
     public static void main(String[] args) {
 
-//        Properties properties = System.getProperties(); // 获取当前的系统属性
-//        properties.list(System.out); // 将属性列表输出
-
-        System.out.print("CPU个数:");//Runtime.getRuntime()获取当前运行时的实例
+        System.out.println("**************** Runtime.getRuntime() ****************");
+        System.out.print("Runtime.getRuntime()");//Runtime.getRuntime()获取当前运行时的实例
+        System.out.print("CPU个数：");//Runtime.getRuntime()获取当前运行时的实例
         System.out.println(Runtime.getRuntime().availableProcessors()); // availableProcessors()获取当前电脑CPU数量
-        System.out.print("虚拟机内存总量:");
+        System.out.print("虚拟机内存总量：");
         System.out.println(Runtime.getRuntime().totalMemory()); // totalMemory()获取java虚拟机中的内存总量
-        System.out.print("虚拟机空闲内存量:");
+        System.out.print("虚拟机空闲内存量：");
         System.out.println(Runtime.getRuntime().freeMemory()); // freeMemory()获取java虚拟机中的空闲内存量
-        System.out.print("虚拟机使用最大内存量:");
+        System.out.print("虚拟机使用最大内存量：");
         System.out.println(Runtime.getRuntime().maxMemory()); // maxMemory()获取java虚拟机试图使用的最大内存量
 
-        Properties properties = System.getProperties(); //系统属性
+        System.out.println("**************** System.getProperties() ****************");
+        Properties properties = System.getProperties(); // 获取当前的系统属性
         System.out.println("Java的运行环境版本：" + properties.getProperty("java.version"));
         System.out.println("Java的运行环境供应商：" + properties.getProperty("java.vendor"));
         System.out.println("Java供应商的URL：" + properties.getProperty("java.vendor.url"));
@@ -51,6 +51,8 @@ public class SystemInfo {
         System.out.println("用户的账户名称：" + properties.getProperty("user.name"));
         System.out.println("用户的主目录：" + properties.getProperty("user.home"));
         System.out.println("用户的当前工作目录：" + properties.getProperty("user.dir"));
+        System.out.println("******** System.getProperties() ********");
         System.out.println(ConvertUtil.parseString(properties));
+        // properties.list(System.out); // 将属性列表输出，但是显示不完整
     }
 }
