@@ -3,7 +3,7 @@ package com.mjiayou.trejava.temp;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mjiayou.trejava.bean.entity.Coin;
+import com.mjiayou.trejava.temp.entity.Coin;
 
 public class CoinTest {
 	
