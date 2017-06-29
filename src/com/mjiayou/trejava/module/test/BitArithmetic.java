@@ -1,7 +1,7 @@
-package com.mjiayou.trejava.temp;
+package com.mjiayou.trejava.module.test;
 
 /**
- * Created by treason on 2016/12/21.
+ * 位运算，进制运算
  */
 public class BitArithmetic {
 
@@ -31,7 +31,7 @@ public class BitArithmetic {
                 .append("\t\t\t").append("8")
                 .append("\t\t\t").append("2")
                 .append("\n");
-        for (int i = 0; i < 1024; i++) {
+        for (int i = 0; i < 20; i++) {
             builder.append(i)
                     .append("\t\t\t").append(Integer.toHexString(i)) // 十六进制
                     .append("\t\t\t").append(Integer.toOctalString(i)) // 八进制

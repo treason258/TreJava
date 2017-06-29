@@ -5,7 +5,7 @@ import com.mjiayou.trejava.framework.util.ConvertUtil;
 import java.util.Properties;
 
 /**
- * 系统信息
+ * 打印一些系统信息
  */
 public class SystemInfo {
 

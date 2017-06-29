@@ -1,4 +1,4 @@
-package com.mjiayou.trejava.temp;
+package com.mjiayou.trejava.module.test;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -11,7 +11,7 @@ import java.text.RuleBasedCollator;
 import java.util.*;
 
 /**
- * Created by treason on 2017/2/28.
+ * 超级宝项目ApiKey计算算法，两种方式比较
  */
 public class ApiKeyUtils {
 

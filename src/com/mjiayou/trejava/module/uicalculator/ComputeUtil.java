@@ -3,7 +3,7 @@ package com.mjiayou.trejava.module.uicalculator;
 import java.util.regex.Pattern;
 
 /**
- * Created by treason on 2017/6/20.
+ * Calculator 使用的计算工具类
  */
 public class ComputeUtil {
 

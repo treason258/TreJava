@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 import java.math.BigDecimal;
 
 /**
- * Created by treason on 2017/6/20.
+ * 带有UI显示的计算器
  */
 public class Calculator extends Application {
 
