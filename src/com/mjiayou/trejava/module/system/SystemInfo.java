@@ -2,6 +2,7 @@ package com.mjiayou.trejava.module.system;
 
 import com.mjiayou.trejava.framework.util.ConvertUtil;
 
+import java.util.ArrayList;
 import java.util.Properties;
 
 /**
@@ -11,9 +12,8 @@ public class SystemInfo {
 
     public static void main(String[] args) {
 
-        System.out.println("**************** Runtime.getRuntime() ****************");
-        System.out.print("Runtime.getRuntime()");//Runtime.getRuntime()获取当前运行时的实例
-        System.out.print("CPU个数：");//Runtime.getRuntime()获取当前运行时的实例
+        System.out.println("**************** Runtime.getRuntime() ****************"); // Runtime.getRuntime()获取当前运行时的实例
+        System.out.print("CPU个数："); // Runtime.getRuntime()获取当前运行时的实例
         System.out.println(Runtime.getRuntime().availableProcessors()); // availableProcessors()获取当前电脑CPU数量
         System.out.print("虚拟机内存总量：");
         System.out.println(Runtime.getRuntime().totalMemory()); // totalMemory()获取java虚拟机中的内存总量
