@@ -5,6 +5,16 @@ import java.util.Calendar;
 
 public class RateCalculator {
 
+    private static final double RATE_YEAR_GJJ = 3.25 / 100;
+    private static final double RATE_YEAR_GJJ_1_1 = 3.575 / 100;
+    private static final double RATE_YEAR_BUZ = 4.9 / 100;
+    private static final double RATE_YEAR_SDD_ME = 10.8 / 100; // 招商银行-闪电贷-me
+    private static final double RATE_YEAR_SDD_SS = 9.36 / 100; // 招商银行-闪电贷-shasha
+
+    private static final double RATE_DAY_Ali = 0.04 / 100;
+    private static final double RATE_DAY_WX = 0.05 / 100;
+    private static final double RATE_DAY_JD = 0.05 / 100;
+
     /**
      * 贷款本金
      * 还款月数
@@ -19,31 +29,30 @@ public class RateCalculator {
     public static void main(String[] args) {
         System.out.println("**************** BEGIN ****************");
 
-        // 传入参数
-        double corpusMoneyNum = 10000 * 1; // 贷款本金
-        int monthCountNum = 12 * 1; // 还款月数
-        double monthRateNum = 0.04 / 100.0 * 30.0; // 月利率, Ali=0.04%*30; WX=0.05%*30; JD=0.05%*30;
+        PlatformInfo test = new PlatformInfo(10000 * 3.7, 12 * 2, RATE_YEAR_SDD_SS / 12.0);
+        PlatformInfo ali = new PlatformInfo(10000 * 7, 12 * 2, RATE_DAY_Ali * 30.0);
+        PlatformInfo wx = new PlatformInfo(10000 * 7, 12 * 2, RATE_DAY_WX * 30.0);
+        PlatformInfo jd = new PlatformInfo(10000 * 7, 12 * 2, RATE_DAY_JD * 30.0);
+        PlatformInfo gjj = new PlatformInfo(10000 * 7, 12 * 2, RATE_DAY_JD * 30.0);
 
-        BigDecimal corpusMoney = new BigDecimal(corpusMoneyNum); // 贷款本金
-        BigDecimal monthCount = new BigDecimal(monthCountNum); // 还款月数
-        BigDecimal monthRate = new BigDecimal(monthRateNum); // 月利率
-        BigDecimal dayRate = monthRate.divide(new BigDecimal(30.0), 4, BigDecimal.ROUND_HALF_UP); // 日利率
-        BigDecimal yearRate = monthRate.multiply(new BigDecimal(12.0)); // 年利率
-
-        StringBuilder builder = new StringBuilder();
-        builder.append("\n").append("******** INFO ********").append("\n").append("\n");
-        builder.append("corpusMoney = ").append(corpusMoney).append("\n");
-        builder.append("monthCount = ").append(monthCount).append("\n");
-        builder.append("dayRate = ").append(dayRate.multiply(new BigDecimal(100.0)).setScale(2, BigDecimal.ROUND_HALF_UP)).append("%").append("\n");
-        builder.append("monthRate = ").append(monthRate.multiply(new BigDecimal(100.0)).setScale(2, BigDecimal.ROUND_HALF_UP)).append("%").append("\n");
-        builder.append("yearRate = ").append(yearRate.multiply(new BigDecimal(100.0)).setScale(2, BigDecimal.ROUND_HALF_UP)).append("%").append("\n");
-        System.out.println(builder.toString());
-
-        System.out.println(getEqualityCorpus(corpusMoney, monthCount, monthRate));
-        System.out.println(getEqualityCorpusAndInterest(corpusMoney, monthCount, monthRate));
-        System.out.println(getEqualityCorpusForDay(corpusMoney, monthCount, monthRate));
+        PlatformInfo platformInfo = test;
+        System.out.println(getInfo(platformInfo));
+        System.out.println(getEqualityCorpus(platformInfo));
+        System.out.println(getEqualityCorpusAndInterest(platformInfo));
+//        System.out.println(getEqualityCorpusForDay(corpusMoney, monthCount, monthRate));
 
         System.out.println("**************** END ****************");
+    }
+
+    public static String getInfo(PlatformInfo platformInfo) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("\n").append("******** INFO ********").append("\n").append("\n");
+        builder.append("corpusMoney = ").append(platformInfo.corpusMoney).append("\n");
+        builder.append("monthCount = ").append(platformInfo.monthCount).append("\n");
+        builder.append("dayRate = ").append(platformInfo.dayRate.multiply(new BigDecimal(100.0)).setScale(4, BigDecimal.ROUND_HALF_UP)).append("%").append("\n");
+        builder.append("monthRate = ").append(platformInfo.monthRate.multiply(new BigDecimal(100.0)).setScale(4, BigDecimal.ROUND_HALF_UP)).append("%").append("\n");
+        builder.append("yearRate = ").append(platformInfo.yearRate.multiply(new BigDecimal(100.0)).setScale(4, BigDecimal.ROUND_HALF_UP)).append("%").append("\n");
+        return builder.toString();
     }
 
     /**
@@ -54,7 +63,7 @@ public class RateCalculator {
      * 每月偿还利息 = 剩余贷款本金×月利率
      * 每月偿还本息 = 每月偿还本金+每月偿还利息
      */
-    public static String getEqualityCorpus(BigDecimal corpusMoney, BigDecimal monthCount, BigDecimal monthRate) {
+    public static String getEqualityCorpus(PlatformInfo platformInfo) {
         StringBuilder builder = new StringBuilder();
         builder.append("\n").append("******** getEqualityCorpus ********").append("\n").append("\n");
 
@@ -64,15 +73,15 @@ public class RateCalculator {
         BigDecimal monthCorpus;                             // 每月偿还本金
         BigDecimal monthInterest;                           // 每月偿还利息
         BigDecimal monthCorpusAndInterest;                  // 每月偿还本息
-        BigDecimal surplusCorpus = corpusMoney;             // 剩余贷款本金
+        BigDecimal surplusCorpus = platformInfo.corpusMoney;             // 剩余贷款本金
 
         // 每月偿还本金 = 贷款本金÷还款月数
-        monthCorpus = corpusMoney.divide(monthCount, 4, BigDecimal.ROUND_HALF_UP);
+        monthCorpus = platformInfo.corpusMoney.divide(platformInfo.monthCount, 4, BigDecimal.ROUND_HALF_UP);
         builder.append("monthCorpus = ").append(monthCorpus).append("\n");
 
-        for (int i = 1; i <= monthCount.intValue(); i++) {
+        for (int i = 1; i <= platformInfo.monthCount.intValue(); i++) {
             // 每月偿还利息 = 剩余贷款本金×月利率
-            monthInterest = surplusCorpus.multiply(monthRate).setScale(4, BigDecimal.ROUND_HALF_UP);
+            monthInterest = surplusCorpus.multiply(platformInfo.monthRate).setScale(4, BigDecimal.ROUND_HALF_UP);
             // 每月偿还本息 = (贷款本金÷还款月数)+(贷款本金-已归还本金)×月利率
             monthCorpusAndInterest = monthCorpus.add(monthInterest);
             // 剩余贷款本金
@@ -82,7 +91,7 @@ public class RateCalculator {
             sumInterest = sumInterest.add(monthInterest);
             sumCorpusAndInterest = sumCorpusAndInterest.add(monthCorpusAndInterest);
 
-            builder.append("").append(i).append(": ").append(monthCorpus).append(" + ").append(monthInterest).append(" = ").append(monthCorpus.add(monthInterest)).append("\n");
+//            builder.append("").append(i).append(": ").append(monthCorpus).append(" + ").append(monthInterest).append(" = ").append(monthCorpus.add(monthInterest)).append("\n");
         }
 
         builder.append("sumCorpus = ").append(sumCorpus).append("\n");
@@ -101,7 +110,7 @@ public class RateCalculator {
      * 每月偿还利息 = [剩余贷款本金 x 月利率]
      * // 每月偿还利息 = [贷款本金 × 月利率 × [(1+月利率)^还款月数 - (1+月利率)^(还款月序号-1)]] ÷ [(1+月利率)^还款月数-1]
      */
-    public static String getEqualityCorpusAndInterest(BigDecimal corpusMoney, BigDecimal monthCount, BigDecimal monthRate) {
+    public static String getEqualityCorpusAndInterest(PlatformInfo platformInfo) {
         StringBuilder builder = new StringBuilder();
         builder.append("\n").append("******** getEqualityCorpusAndInterest ********").append("\n").append("\n");
 
@@ -111,25 +120,25 @@ public class RateCalculator {
         BigDecimal monthCorpus;                             // 每月偿还本金
         BigDecimal monthInterest;                           // 每月偿还利息
         BigDecimal monthCorpusAndInterest;                  // 每月偿还本息
-        BigDecimal surplusCorpus = corpusMoney;             // 剩余贷款本金
+        BigDecimal surplusCorpus = platformInfo.corpusMoney;             // 剩余贷款本金
 
         // 固定：每月偿还本息 = [贷款本金 × 月利率 × (1+月利率)^还款月数] ÷ [(1+月利率)^还款月数-1]
         monthCorpusAndInterest =
-                corpusMoney
-                        .multiply(monthRate)
-                        .multiply(new BigDecimal(Math.pow(1 + monthRate.doubleValue(), monthCount.intValue())))
-                        .divide(new BigDecimal(Math.pow(1 + monthRate.doubleValue(), monthCount.intValue()) - 1), 4, BigDecimal.ROUND_HALF_UP);
+                platformInfo.corpusMoney
+                        .multiply(platformInfo.monthRate)
+                        .multiply(new BigDecimal(Math.pow(1 + platformInfo.monthRate.doubleValue(), platformInfo.monthCount.intValue())))
+                        .divide(new BigDecimal(Math.pow(1 + platformInfo.monthRate.doubleValue(), platformInfo.monthCount.intValue()) - 1), 4, BigDecimal.ROUND_HALF_UP);
         builder.append("monthCorpusAndInterest = ").append(monthCorpusAndInterest).append("\n");
 
-        for (int i = 1; i <= monthCount.intValue(); i++) {
+        for (int i = 1; i <= platformInfo.monthCount.intValue(); i++) {
             // 每月偿还本金 = [贷款本金 × 月利率 × (1+月利率)^(还款月序号-1)] ÷ [(1+月利率)^还款月数-1]
             monthCorpus =
-                    corpusMoney
-                            .multiply(monthRate)
-                            .multiply(new BigDecimal((Math.pow((1 + monthRate.doubleValue()), i - 1))))
-                            .divide(new BigDecimal(Math.pow(1 + monthRate.doubleValue(), monthCount.intValue()) - 1), 4, BigDecimal.ROUND_HALF_UP);
+                    platformInfo.corpusMoney
+                            .multiply(platformInfo.monthRate)
+                            .multiply(new BigDecimal((Math.pow((1 + platformInfo.monthRate.doubleValue()), i - 1))))
+                            .divide(new BigDecimal(Math.pow(1 + platformInfo.monthRate.doubleValue(), platformInfo.monthCount.intValue()) - 1), 4, BigDecimal.ROUND_HALF_UP);
             // 每月偿还利息 = [剩余贷款本金 x 月利率]
-            monthInterest = surplusCorpus.multiply(monthRate).setScale(4, BigDecimal.ROUND_HALF_UP);
+            monthInterest = surplusCorpus.multiply(platformInfo.monthRate).setScale(4, BigDecimal.ROUND_HALF_UP);
             // 剩余贷款本金
             surplusCorpus = surplusCorpus.subtract(monthCorpus);
             // 总和
@@ -137,7 +146,7 @@ public class RateCalculator {
             sumInterest = sumInterest.add(monthInterest);
             sumCorpusAndInterest = sumCorpusAndInterest.add(monthCorpusAndInterest);
 
-            builder.append("").append(i).append(": ").append(monthCorpus).append(" + ").append(monthInterest).append(" = ").append(monthCorpus.add(monthInterest)).append("\n");
+//            builder.append("").append(i).append(": ").append(monthCorpus).append(" + ").append(monthInterest).append(" = ").append(monthCorpus.add(monthInterest)).append("\n");
         }
 
         builder.append("sumCorpus = ").append(sumCorpus).append("\n");
@@ -223,5 +232,35 @@ public class RateCalculator {
         builder.append("sumCorpusAndInterest = ").append(sumCorpusAndInterest).append("\n");
 
         return builder.toString();
+    }
+
+    /**
+     * 平台信息
+     */
+    private static class PlatformInfo {
+
+        private BigDecimal corpusMoney;  // 贷款本金
+        private BigDecimal monthCount; // 还款月数
+        private BigDecimal monthRate; // 月利率
+        private BigDecimal dayRate; // 日利率
+        private BigDecimal yearRate; // 年利率
+
+        /**
+         * @param corpusMoney 贷款本金
+         * @param monthCount  还款月数
+         * @param monthRate   月利率
+         */
+        public PlatformInfo(BigDecimal corpusMoney, BigDecimal monthCount, BigDecimal monthRate) {
+            this.corpusMoney = corpusMoney;
+            this.monthCount = monthCount;
+            this.monthRate = monthRate;
+            this.dayRate = monthRate.divide(new BigDecimal(30.0), 6, BigDecimal.ROUND_HALF_UP);
+            this.yearRate = monthRate.multiply(new BigDecimal(12.0));
+
+        }
+
+        public PlatformInfo(double corpusMoneyNum, int monthCountNum, double monthRateNum) {
+            this(new BigDecimal(corpusMoneyNum), new BigDecimal(monthCountNum), new BigDecimal(monthRateNum));
+        }
     }
 }

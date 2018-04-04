@@ -8,17 +8,30 @@ public class Main {
 	public static void main(String[] args) {
 		System.out.println("test");
 
-		/**
-		 * getStringByList
-		 */
-		List<String> list = new ArrayList<>();
-		list.add("one");
-		list.add("two");
-		list.add("");
-		list.add("four");
-		list.add("five");
+		String aaa = "a";
+		String bbb = "b";
+		String ccc = "c";
 
-		String result = CommonUtils.getStringByList(list);
-		System.out.println(result);
+		StringBuilder abversionSB = new StringBuilder();
+		if (aaa != null && !aaa.equals("")) {
+			if(!abversionSB.toString().equals("")) {
+				abversionSB.append(".");
+			}
+			abversionSB.append(aaa);
+		}
+		if (bbb != null && !bbb.equals("")) {
+			if(!abversionSB.toString().equals("")) {
+				abversionSB.append(".");
+			}
+			abversionSB.append(bbb);
+		}
+		if (ccc != null && !ccc.equals("")) {
+			if(!abversionSB.toString().equals("")) {
+				abversionSB.append(".");
+			}
+			abversionSB.append(ccc);
+		}
+
+		System.out.println("abversion -> " + abversionSB.toString());
 	}
 }
