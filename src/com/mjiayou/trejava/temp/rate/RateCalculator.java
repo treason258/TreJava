@@ -34,8 +34,10 @@ public class RateCalculator {
         PlatformInfo wx = new PlatformInfo(10000 * 7, 12 * 2, RATE_DAY_WX * 30.0);
         PlatformInfo jd = new PlatformInfo(10000 * 7, 12 * 2, RATE_DAY_JD * 30.0);
         PlatformInfo gjj = new PlatformInfo(10000 * 7, 12 * 2, RATE_DAY_JD * 30.0);
+        // 京东白条，2万，6个月，万4
+        PlatformInfo jingdongbaitiao = new PlatformInfo(20000, 6, 3.5 / 10000.0 * 30.0);
 
-        PlatformInfo platformInfo = test;
+        PlatformInfo platformInfo = jingdongbaitiao;
         System.out.println(getInfo(platformInfo));
         System.out.println(getEqualityCorpus(platformInfo));
         System.out.println(getEqualityCorpusAndInterest(platformInfo));
@@ -46,12 +48,12 @@ public class RateCalculator {
 
     public static String getInfo(PlatformInfo platformInfo) {
         StringBuilder builder = new StringBuilder();
-        builder.append("\n").append("******** INFO ********").append("\n").append("\n");
-        builder.append("corpusMoney = ").append(platformInfo.corpusMoney).append("\n");
-        builder.append("monthCount = ").append(platformInfo.monthCount).append("\n");
-        builder.append("dayRate = ").append(platformInfo.dayRate.multiply(new BigDecimal(100.0)).setScale(4, BigDecimal.ROUND_HALF_UP)).append("%").append("\n");
-        builder.append("monthRate = ").append(platformInfo.monthRate.multiply(new BigDecimal(100.0)).setScale(4, BigDecimal.ROUND_HALF_UP)).append("%").append("\n");
-        builder.append("yearRate = ").append(platformInfo.yearRate.multiply(new BigDecimal(100.0)).setScale(4, BigDecimal.ROUND_HALF_UP)).append("%").append("\n");
+        builder.append("\n").append("******** 贷款信息 ********").append("\n").append("\n");
+        builder.append("贷款本金 = ").append(platformInfo.corpusMoney).append("\n");
+        builder.append("还款月份 = ").append(platformInfo.monthCount).append("\n");
+        builder.append("日利率 = ").append(platformInfo.dayRate.multiply(new BigDecimal(100.0)).setScale(4, BigDecimal.ROUND_HALF_UP)).append("%").append("\n");
+        builder.append("月利率 = ").append(platformInfo.monthRate.multiply(new BigDecimal(100.0)).setScale(4, BigDecimal.ROUND_HALF_UP)).append("%").append("\n");
+        builder.append("年利率 = ").append(platformInfo.yearRate.multiply(new BigDecimal(100.0)).setScale(4, BigDecimal.ROUND_HALF_UP)).append("%").append("\n");
         return builder.toString();
     }
 
@@ -65,7 +67,7 @@ public class RateCalculator {
      */
     public static String getEqualityCorpus(PlatformInfo platformInfo) {
         StringBuilder builder = new StringBuilder();
-        builder.append("\n").append("******** getEqualityCorpus ********").append("\n").append("\n");
+        builder.append("\n").append("******** 等额本金 ********").append("\n").append("\n");
 
         BigDecimal sumCorpus = BigDecimal.ZERO;             // 本金总和
         BigDecimal sumInterest = BigDecimal.ZERO;           // 利息总和
@@ -94,9 +96,9 @@ public class RateCalculator {
 //            builder.append("").append(i).append(": ").append(monthCorpus).append(" + ").append(monthInterest).append(" = ").append(monthCorpus.add(monthInterest)).append("\n");
         }
 
-        builder.append("sumCorpus = ").append(sumCorpus).append("\n");
-        builder.append("sumInterest = ").append(sumInterest).append("\n");
-        builder.append("sumCorpusAndInterest = ").append(sumCorpusAndInterest).append("\n");
+        builder.append("本金总和 = ").append(sumCorpus).append("\n");
+        builder.append("利息总和 = ").append(sumInterest).append("\n");
+        builder.append("本息总和 = ").append(sumCorpusAndInterest).append("\n");
 
         return builder.toString();
     }
@@ -112,7 +114,7 @@ public class RateCalculator {
      */
     public static String getEqualityCorpusAndInterest(PlatformInfo platformInfo) {
         StringBuilder builder = new StringBuilder();
-        builder.append("\n").append("******** getEqualityCorpusAndInterest ********").append("\n").append("\n");
+        builder.append("\n").append("******** 等额本息 ********").append("\n").append("\n");
 
         BigDecimal sumCorpus = BigDecimal.ZERO;             // 本金总和
         BigDecimal sumInterest = BigDecimal.ZERO;           // 利息总和
@@ -149,9 +151,9 @@ public class RateCalculator {
 //            builder.append("").append(i).append(": ").append(monthCorpus).append(" + ").append(monthInterest).append(" = ").append(monthCorpus.add(monthInterest)).append("\n");
         }
 
-        builder.append("sumCorpus = ").append(sumCorpus).append("\n");
-        builder.append("sumInterest = ").append(sumInterest).append("\n");
-        builder.append("sumCorpusAndInterest = ").append(sumCorpusAndInterest).append("\n");
+        builder.append("本金总和 = ").append(sumCorpus).append("\n");
+        builder.append("利息总和 = ").append(sumInterest).append("\n");
+        builder.append("本息总和 = ").append(sumCorpusAndInterest).append("\n");
 
         return builder.toString();
     }
